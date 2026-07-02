@@ -63,8 +63,3 @@ src/aws_restart_lab/
     catalog.py              # Lista explicita de ejercicios cargados
     exercise_01/            # Ejercicio simple de ejemplo
 ```
-
-## Agregar ejercicios
-
-Lee [docs/ADDING_EXERCISES.md](docs/ADDING_EXERCISES.md).
-
