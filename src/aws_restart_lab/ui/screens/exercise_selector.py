@@ -13,7 +13,6 @@ from aws_restart_lab.ui.screens.base import BaseScreen
 class ExerciseSelectorScreen(BaseScreen):
     BASE_WIDTH = 1536
     BASE_HEIGHT = 1024
-    VISIBLE_TABS = 10
 
     def __init__(
         self,
@@ -68,8 +67,8 @@ class ExerciseSelectorScreen(BaseScreen):
         if selected_slug is None:
             return 0
 
-        for index, exercise in enumerate(self.exercises[: self.VISIBLE_TABS]):
-            if exercise is not None and exercise.slug == selected_slug:
+        for index, exercise in enumerate(self.exercises):
+            if exercise.slug == selected_slug:
                 return index
         return 0
 
@@ -167,10 +166,11 @@ class ExerciseSelectorScreen(BaseScreen):
         self.canvas.create_image(panel_x, panel_y, image=self._panel_photo, anchor="nw", tags="drawn")
 
         tab_h = ss(75)
-        tab_w = panel_w / self.VISIBLE_TABS
+        tab_count = max(1, len(self.exercises))
+        tab_w = panel_w / tab_count
         self._tab_bounds = []
 
-        for index in range(self.VISIBLE_TABS):
+        for index in range(tab_count):
             x1 = round(panel_x + tab_w * index)
             x2 = round(panel_x + tab_w * (index + 1))
             self._tab_bounds.append((x1, panel_y, x2, panel_y + tab_h, index))
@@ -245,9 +245,7 @@ class ExerciseSelectorScreen(BaseScreen):
 
     def _tab_label(self, index: int) -> str:
         if index < len(self.exercises):
-            exercise = self.exercises[index]
-            if exercise is not None:
-                return exercise.title
+            return self.exercises[index].title
         return f"Ejercicio {index + 1}"
 
     def _handle_click(self, event: tk.Event) -> None:
@@ -275,10 +273,6 @@ class ExerciseSelectorScreen(BaseScreen):
             return
 
         exercise = self.exercises[self._selected_tab_index]
-        if exercise is None:
-            self.context.state.selected_exercise_slug = None
-            return
-
         self.context.state.selected_exercise_slug = exercise.slug
         self._exercise_view = exercise.create_view(self.content_host, self.context)
         self._exercise_view.grid(row=0, column=0, sticky="nsew")

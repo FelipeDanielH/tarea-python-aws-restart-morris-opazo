@@ -4,7 +4,7 @@ from aws_restart_lab.core.context import AppContext
 from aws_restart_lab.core.exercise import ExerciseView
 
 
-class AdditionCalculatorView(ExerciseView):
+class CharacterCounterView(ExerciseView):
     def __init__(self, master: ctk.CTkFrame, context: AppContext) -> None:
         super().__init__(master, context)
 
@@ -13,9 +13,7 @@ class AdditionCalculatorView(ExerciseView):
 
         workspace = ctk.CTkFrame(self, fg_color="transparent")
         workspace.grid(row=0, column=0, sticky="nsew", padx=36, pady=34)
-        workspace.grid_columnconfigure(0, weight=0)
-        workspace.grid_columnconfigure(1, weight=0)
-        workspace.grid_columnconfigure(2, weight=0)
+        workspace.grid_columnconfigure(0, weight=1)
 
         title = ctk.CTkLabel(
             workspace,
@@ -24,79 +22,65 @@ class AdditionCalculatorView(ExerciseView):
             font=ctk.CTkFont(family="Segoe UI", size=24, weight="bold"),
             anchor="w",
         )
-        title.grid(row=0, column=0, columnspan=3, sticky="ew")
+        title.grid(row=0, column=0, sticky="ew")
 
         subtitle = ctk.CTkLabel(
             workspace,
-            text="Calculadora placeholder: solo suma.",
+            text="Escribe una frase cualquiera y calcula cuantas letras contiene.",
             text_color="#cbd5e1",
-            font=ctk.CTkFont(family="Segoe UI", size=18),
+            font=ctk.CTkFont(family="Segoe UI", size=17),
             anchor="w",
         )
-        subtitle.grid(row=1, column=0, columnspan=3, pady=(16, 20), sticky="ew")
+        subtitle.grid(row=1, column=0, pady=(10, 22), sticky="ew")
 
-        self.first_entry = self._number_entry(workspace, "Primer numero")
-        self.first_entry.grid(row=2, column=0, sticky="w")
-
-        plus = ctk.CTkLabel(
+        self.phrase_entry = ctk.CTkEntry(
             workspace,
-            text="+",
-            text_color="#ffffff",
-            font=ctk.CTkFont(family="Segoe UI", size=26, weight="bold"),
-        )
-        plus.grid(row=2, column=1, padx=16)
-
-        self.second_entry = self._number_entry(workspace, "Segundo numero")
-        self.second_entry.grid(row=2, column=2, sticky="w")
-
-        calculate_button = ctk.CTkButton(
-            workspace,
-            text="Sumar",
-            width=140,
-            height=40,
-            fg_color="#ff9900",
-            hover_color="#e88900",
-            text_color="#081526",
-            font=ctk.CTkFont(family="Segoe UI", size=15, weight="bold"),
-            command=self._calculate,
-        )
-        calculate_button.grid(row=3, column=0, pady=(24, 0), sticky="w")
-
-        self.result_label = ctk.CTkLabel(
-            workspace,
-            text="Resultado: -",
-            text_color="#ffffff",
-            font=ctk.CTkFont(family="Segoe UI", size=20, weight="bold"),
-            anchor="w",
-        )
-        self.result_label.grid(row=4, column=0, columnspan=3, pady=(24, 0), sticky="ew")
-
-    def _number_entry(self, master: ctk.CTkFrame, placeholder: str) -> ctk.CTkEntry:
-        return ctk.CTkEntry(
-            master,
-            width=190,
-            height=42,
+            height=46,
             corner_radius=8,
             border_color="#475569",
             fg_color="#0f2138",
             text_color="#ffffff",
-            placeholder_text=placeholder,
+            placeholder_text="Ingresa una frase...",
             placeholder_text_color="#94a3b8",
-            font=ctk.CTkFont(family="Segoe UI", size=15),
+            font=ctk.CTkFont(family="Segoe UI", size=16),
         )
+        self.phrase_entry.grid(row=2, column=0, sticky="ew")
+        self.phrase_entry.bind("<Return>", lambda _event: self._count_characters())
 
-    def _calculate(self) -> None:
-        try:
-            first = float(self.first_entry.get().replace(",", "."))
-            second = float(self.second_entry.get().replace(",", "."))
-        except ValueError:
-            self.result_label.configure(text="Resultado: ingresa dos numeros validos")
-            return
+        button = ctk.CTkButton(
+            workspace,
+            text="Contar caracteres",
+            width=180,
+            height=42,
+            fg_color="#ff9900",
+            hover_color="#e88900",
+            text_color="#081526",
+            font=ctk.CTkFont(family="Segoe UI", size=15, weight="bold"),
+            command=self._count_characters,
+        )
+        button.grid(row=3, column=0, pady=(22, 0), sticky="w")
 
-        result = first + second
-        if result.is_integer():
-            result_text = str(int(result))
-        else:
-            result_text = f"{result:.2f}".rstrip("0").rstrip(".")
-        self.result_label.configure(text=f"Resultado: {result_text}")
+        self.result_label = ctk.CTkLabel(
+            workspace,
+            text="Resultado: 0 caracteres",
+            text_color="#ffffff",
+            font=ctk.CTkFont(family="Segoe UI", size=28, weight="bold"),
+            anchor="w",
+        )
+        self.result_label.grid(row=4, column=0, pady=(30, 8), sticky="ew")
 
+        self.detail_label = ctk.CTkLabel(
+            workspace,
+            text="Tambien se muestran caracteres sin espacios.",
+            text_color="#94a3b8",
+            font=ctk.CTkFont(family="Segoe UI", size=15),
+            anchor="w",
+        )
+        self.detail_label.grid(row=5, column=0, sticky="ew")
+
+    def _count_characters(self) -> None:
+        phrase = self.phrase_entry.get()
+        total = len(phrase)
+        without_spaces = len(phrase.replace(" ", ""))
+        self.result_label.configure(text=f"Resultado: {total} caracteres")
+        self.detail_label.configure(text=f"Sin contar espacios: {without_spaces} caracteres")

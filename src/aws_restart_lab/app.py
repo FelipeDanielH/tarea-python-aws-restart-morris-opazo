@@ -11,6 +11,8 @@ from aws_restart_lab.ui.screens.welcome import WelcomeScreen
 
 
 class App(ctk.CTk):
+    SELECTOR_SLOT_COUNT = 8
+
     def __init__(self) -> None:
         super().__init__()
 
@@ -51,11 +53,16 @@ class App(ctk.CTk):
 
     def show_selector(self) -> None:
         self.title("AWS re/Start - Laboratorio")
+        exercises = [
+            exercise
+            for exercise in self.registry.list_by_slots(self.SELECTOR_SLOT_COUNT)
+            if exercise is not None
+        ]
         self.router.show(
             lambda master: ExerciseSelectorScreen(
                 master,
                 context=self.context,
-                exercises=self.registry.list_by_slots(10),
+                exercises=exercises,
                 on_open_exercise=self.show_exercise,
                 on_change_name=self.show_welcome,
             )

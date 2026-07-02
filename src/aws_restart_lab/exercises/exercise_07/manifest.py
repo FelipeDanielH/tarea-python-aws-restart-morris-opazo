@@ -7,13 +7,12 @@ from .src.app import SnakeGameApp
 
 def get_definition() -> ExerciseDefinition:
     return ExerciseDefinition(
-        slug="exercise-10",
-        title="Ejercicio 10",
-        summary="Juego Snake isometrico con Canvas, arquitectura modular y assets preparados.",
+        slug="exercise-07",
+        title="Ejercicio 7",
+        summary="Juego inventado: Snake isometrico con Canvas, niveles, marines y assets.",
         complexity="complex",
         factory=SnakeGameApp,
-        slot=10,
+        slot=7,
         assets_dir=Path(__file__).parent / "assets",
         tags=("game", "snake", "isometric"),
     )
-
