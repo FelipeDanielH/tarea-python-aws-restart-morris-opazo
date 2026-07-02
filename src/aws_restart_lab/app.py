@@ -19,6 +19,7 @@ class App(ctk.CTk):
         self.title(APP_TITLE)
         self.geometry(DEFAULT_WINDOW_SIZE)
         self.minsize(*MIN_WINDOW_SIZE)
+        self.state("zoomed")
 
         self.grid_columnconfigure(0, weight=1)
         self.grid_rowconfigure(0, weight=1)
