@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aws-restart-lab"
+version = "0.1.0"
+description = "Contenedor de ejercicios Python con CustomTkinter."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "customtkinter>=5.2.2",
+    "pillow>=10.0.0",
+]
+
+[project.scripts]
+aws-restart-lab = "aws_restart_lab.main:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+aws_restart_lab = [
+    "assets/**/*",
+    "exercises/**/assets/**/*",
+]

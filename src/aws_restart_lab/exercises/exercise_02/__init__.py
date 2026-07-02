@@ -1,0 +1,2 @@
+"""Addition calculator placeholder exercise."""
+

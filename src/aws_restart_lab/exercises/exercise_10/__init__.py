@@ -1,0 +1,2 @@
+"""Isometric Snake game exercise."""
+
