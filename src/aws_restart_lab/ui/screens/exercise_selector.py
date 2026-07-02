@@ -131,28 +131,6 @@ class ExerciseSelectorScreen(BaseScreen):
             tags="drawn",
         )
 
-        self.canvas.create_text(
-            sx(1420),
-            sy(119),
-            text="aws",
-            fill="#ffffff",
-            font=("Segoe UI", ss(45), "bold"),
-            anchor="center",
-            tags="drawn",
-        )
-        self.canvas.create_arc(
-            sx(1378),
-            sy(150),
-            sx(1465),
-            sy(190),
-            start=205,
-            extent=128,
-            style="arc",
-            outline="#ff9900",
-            width=ss(4),
-            tags="drawn",
-        )
-
     def _draw_panel_and_tabs(
         self,
         sx: Callable[[float], int],

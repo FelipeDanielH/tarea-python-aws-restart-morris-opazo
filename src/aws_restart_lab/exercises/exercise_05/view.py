@@ -7,6 +7,9 @@ from aws_restart_lab.core.exercise import ExerciseView
 
 
 class ScientificCalculatorView(ExerciseView):
+    BUTTON_WIDTH = 74
+    BUTTON_HEIGHT = 42
+
     SAFE_NAMES = {
         "sqrt": math.sqrt,
         "sin": math.sin,
@@ -37,24 +40,30 @@ class ScientificCalculatorView(ExerciseView):
         workspace = ctk.CTkFrame(self, fg_color="transparent")
         workspace.grid(row=0, column=0, sticky="nsew", padx=36, pady=34)
         workspace.grid_columnconfigure(0, weight=1)
+        workspace.grid_rowconfigure(1, weight=1)
 
         title = ctk.CTkLabel(
             workspace,
             text="Ejercicio 5",
             text_color="#ffffff",
             font=ctk.CTkFont(family="Segoe UI", size=24, weight="bold"),
-            anchor="w",
+            anchor="center",
         )
         title.grid(row=0, column=0, sticky="ew")
 
-        panel = ctk.CTkFrame(workspace, fg_color="#0f2138", corner_radius=10)
-        panel.grid(row=1, column=0, pady=(18, 0), sticky="nw")
+        content = ctk.CTkFrame(workspace, fg_color="transparent")
+        content.grid(row=1, column=0, sticky="nsew")
+        content.grid_columnconfigure(0, weight=1)
+        content.grid_rowconfigure(0, weight=1)
+
+        panel = ctk.CTkFrame(content, fg_color="#0f2138", corner_radius=10)
+        panel.grid(row=0, column=0, sticky="")
         for column in range(5):
-            panel.grid_columnconfigure(column, weight=1, minsize=78)
+            panel.grid_columnconfigure(column, weight=1, minsize=self.BUTTON_WIDTH, uniform="calculator")
 
         self.expression_entry = ctk.CTkEntry(
             panel,
-            width=420,
+            width=430,
             height=50,
             corner_radius=8,
             border_color="#475569",
@@ -80,8 +89,8 @@ class ScientificCalculatorView(ExerciseView):
                 button = ctk.CTkButton(
                     panel,
                     text=label,
-                    width=70,
-                    height=42,
+                    width=self.BUTTON_WIDTH,
+                    height=self.BUTTON_HEIGHT,
                     fg_color="#132a46",
                     hover_color="#1d3a5d",
                     text_color="#ffffff",
@@ -93,7 +102,8 @@ class ScientificCalculatorView(ExerciseView):
         clear_button = ctk.CTkButton(
             panel,
             text="Limpiar",
-            height=42,
+            width=self.BUTTON_WIDTH,
+            height=self.BUTTON_HEIGHT,
             fg_color="#334155",
             hover_color="#475569",
             command=self._clear,
@@ -103,7 +113,8 @@ class ScientificCalculatorView(ExerciseView):
         delete_button = ctk.CTkButton(
             panel,
             text="Borrar",
-            height=42,
+            width=self.BUTTON_WIDTH,
+            height=self.BUTTON_HEIGHT,
             fg_color="#334155",
             hover_color="#475569",
             command=self._delete_last,
@@ -113,7 +124,8 @@ class ScientificCalculatorView(ExerciseView):
         equals_button = ctk.CTkButton(
             panel,
             text="=",
-            height=42,
+            width=self.BUTTON_WIDTH,
+            height=self.BUTTON_HEIGHT,
             fg_color="#ff9900",
             hover_color="#e88900",
             text_color="#081526",

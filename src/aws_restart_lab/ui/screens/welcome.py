@@ -161,18 +161,8 @@ class WelcomeScreen(BaseScreen):
             tags="drawn",
         )
         self.canvas.create_text(
-            sx(768),
-            sy(516),
-            text="Nos alegra tenerte aquí.\nPara comenzar, cuéntanos tu nombre.",
-            fill="#45527d",
-            font=("Segoe UI", ss(22)),
-            justify="center",
-            anchor="center",
-            tags="drawn",
-        )
-        self.canvas.create_text(
             sx(498),
-            sy(592),
+            sy(556),
             text="¿Cuál es tu nombre?",
             fill="#121849",
             font=("Segoe UI", ss(20), "bold"),
@@ -180,7 +170,7 @@ class WelcomeScreen(BaseScreen):
             tags="drawn",
         )
 
-        entry_x, entry_y = sx(498), sy(638)
+        entry_x, entry_y = sx(498), sy(602)
         entry_w, entry_h = ss(540), ss(67)
         self.entry_shell.configure(
             width=entry_w,
@@ -200,10 +190,10 @@ class WelcomeScreen(BaseScreen):
         self.canvas.tag_raise(self.entry_window)
 
         self.error_label.configure(font=ctk.CTkFont(family="Segoe UI", size=ss(13)))
-        self.canvas.coords(self.error_window, entry_x, sy(708))
+        self.canvas.coords(self.error_window, entry_x, sy(672))
         self.canvas.tag_raise(self.error_window)
 
-        button_x, button_y = sx(498), sy(736)
+        button_x, button_y = sx(498), sy(700)
         button_w, button_h = ss(540), ss(71)
         self._button_bounds = (button_x, button_y, button_x + button_w, button_y + button_h)
         self._button_photo = ImageTk.PhotoImage(
@@ -221,7 +211,7 @@ class WelcomeScreen(BaseScreen):
         )
         self.canvas.create_text(
             sx(750),
-            sy(772),
+            sy(736),
             text="Comenzar",
             fill="#ffffff",
             font=("Segoe UI", ss(24), "bold"),
@@ -230,7 +220,7 @@ class WelcomeScreen(BaseScreen):
         )
         self.canvas.create_text(
             sx(839),
-            sy(772),
+            sy(736),
             text="→",
             fill="#ffffff",
             font=("Segoe UI", ss(31)),

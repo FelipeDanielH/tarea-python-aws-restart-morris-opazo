@@ -19,7 +19,8 @@ class App(ctk.CTk):
         self.title(APP_TITLE)
         self.geometry(DEFAULT_WINDOW_SIZE)
         self.minsize(*MIN_WINDOW_SIZE)
-        self.state("zoomed")
+        self.attributes("-fullscreen", True)
+        self.bind("<Escape>", lambda _event: self.attributes("-fullscreen", False))
 
         self.grid_columnconfigure(0, weight=1)
         self.grid_rowconfigure(0, weight=1)
